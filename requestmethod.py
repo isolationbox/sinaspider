@@ -26,6 +26,6 @@ def getDetail(data):
     except urllib.error.HTTPError as e:
         if hasattr(e, 'code'):
             print('错误状态码是' + str(e.code))
-            return '[]'
+            return []
     else:
         return list(map(lambda v: v.split(','),re.sub(r'var .*?"','',res).replace('";','').split('\n')[0:-1]))

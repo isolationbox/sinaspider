@@ -24,9 +24,10 @@ def getSymbols(page, num = 20, node='all'):
   sql += ' limit %d,%d'%((page - 1) * num + 1, page * num)
   try:
     cursor.execute(sql)
-    res = cursor.fetchall()[0]
+    result = cursor.fetchall()
+    res = list(map(lambda v: v[0], result))
   except:
+    res = []
     print(sys.exc_info())
   con.close()
-  print(res)
   return res
