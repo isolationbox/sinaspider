@@ -3,8 +3,9 @@
 import demjson
 import siansql
 import requestmethod
+import sys
 
-nodeList = ["sh_a", "sh_b", "sz_a", "sz_b","hs_a","hs_b"]
+nodeList = ["sh_a", "sh_b", "sz_a", "sz_b"]
 url = 'http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData'
 
 for node in nodeList:
@@ -17,15 +18,21 @@ for node in nodeList:
         '_s_r_a': 'init',
     }
     data['node'] = node
+    tryNum = 0
     while True:
         try:
             stockInfo = demjson.decode(requestmethod.getInfo(url, data))
-        except Exception:
-            break
-        sql = 'insert into  NodeList (symbol,name,node) values (%s,%s,' + node + ')'
+        except:
+            print(sys.exc_info())
+            tryNum += 1
+            if tryNum < 4:
+                continue
+            else:
+                break
+        sql = 'insert into  NodeList (symbol,name,node) values (%s,%s,%s)'
         data['page'] += 1
         data['_s_r_a'] = 'page'
-        params = list(map(lambda item: (item['symbol'], item['name']), stockInfo))
+        params = list(map(lambda item: (item['symbol'], item['name'],node), stockInfo))
         siansql.saveList(sql, params)
         if len(stockInfo) < 100:
             break
