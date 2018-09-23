@@ -21,10 +21,10 @@ def getSymbols(page, num = 20, node='all'):
   sql = 'select symbol from NodeList'
   if node != 'all':
     sql += 'where node=%s'%node
-  sql += 'limit %d,%d'%((page - 1) * num + 1, page * num)
+  sql += ' limit %d,%d'%((page - 1) * num + 1, page * num)
   try:
     cursor.execute(sql)
-    res = cursor.fetchall()
+    res = cursor.fetchall()[0]
   except:
     print(sys.exc_info())
   con.close()
