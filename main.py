@@ -16,6 +16,7 @@ while True:
     # 代号，名称，最新价，买入，卖出，昨收，今开，最高，最低，成交量(股票数，一般要除100)，成交额(元，一般除万),日期，时间，创建时间
     sql = 'insert into detail (symbol,name,price,buy,sell,settlement,open,high,low,volume,amount,date,time,created) value (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
     siansql.saveList(sql, arr)
+    print('第%s请求成功\n'%page)
     if num != len(symbols):
         break
     page += 1
