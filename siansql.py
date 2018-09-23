@@ -10,8 +10,10 @@ def dbCon():
 def saveList(sql, list):
   con, cursor = dbCon()
   try:
+    print(list)
     cursor.executemany(sql, list)
     con.commit()
-  except:
+  except Exception:
     con.rollback()
+    print(Exception)
   con.close()
