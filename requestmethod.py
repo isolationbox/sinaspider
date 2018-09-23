@@ -1,8 +1,6 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
-
 import urllib.request
 import urllib.error
+import re
 
 def getInfo(url, data):
     try:
@@ -19,3 +17,15 @@ def getInfo(url, data):
             return '[]'
     else:
         return result
+
+def getDetail(data):
+    try:
+        url = 'http://hq.sinajs.cn/list=' + ','.join(data)
+        html = urllib.request.urlopen(url)
+        res = html.read().decode('gbk')
+    except urllib.error.HTTPError as e:
+        if hasattr(e, 'code'):
+            print('错误状态码是' + str(e.code))
+            return '[]'
+    else:
+        return list(map(lambda v: v.split(','),re.sub(r'var .*?"','',res).replace('";','').split('\n')[0:-1]))

@@ -1,11 +1,9 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
 import demjson
 import siansql
 import requestmethod
 import sys
 
-nodeList = ["sh_a", "sh_b", "sz_a", "sz_b"]
+nodeList = ["sh_a", "sh_b", "sz_a", "sz_b","dpzs"]
 url = 'http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData'
 
 for node in nodeList:
@@ -36,5 +34,3 @@ for node in nodeList:
         siansql.saveList(sql, params)
         if len(stockInfo) < 100:
             break
-
-
