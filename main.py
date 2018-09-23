@@ -4,7 +4,7 @@ import time
 
 page = 1
 num = 20
-now = time.time()
+now = time.strftime("%Y-%m-%d %H", time.localtime())
 while True:
     symbols = siansql.getSymbols(page, num, 'all')
     if len(symbols) == 0 :
