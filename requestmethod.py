@@ -12,7 +12,7 @@ def getInfo(url, data):
             url += (key + '=' + str(data[key]) + '&')
         response = urllib.request.Request(url ,headers= headers)
         html = urllib.request.urlopen(response)
-        result = html.read().decode('gb2312')
+        result = html.read().decode('gbk')
     except urllib.error.HTTPError as e:
         if hasattr(e, 'code'):
             print('错误状态码是' + str(e.code))
