@@ -1,6 +1,9 @@
+#!/usr/bin/python3
+#coding:utf-8
 import urllib.request
 import urllib.error
 import re
+import demjson
 
 def getInfo(url, data):
     try:
@@ -29,3 +32,18 @@ def getDetail(data):
             return []
     else:
         return list(map(lambda v: v.split(','),re.sub(r'var .*?"','',res).replace('";','').split('\n')[0:-1]))
+
+def isHoliday(date):
+    url = 'http://api.goseek.cn/Tools/holiday?date=%s'%date
+    tryNum = 0
+    while True:
+        try:
+            html = urllib.request.urlopen(url)
+            res = html.read().decode('utf-8')
+            data = demjson.decode(res)['data']
+            break
+        except:
+            tryNum += 1
+        if tryNum > 3:
+            break
+    return data == 1 or data == 2
