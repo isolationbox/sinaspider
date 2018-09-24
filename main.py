@@ -24,7 +24,7 @@ else:
             # 代号，名称，最新价，买入，卖出，昨收，今开，最高，最低，成交量(股票数，一般要除100)，成交额(元，一般除万),日期，时间，创建时间
             sql = 'insert into ' + node + ' (symbol,name,price,buy,sell,settlement,open,high,low,volume,amount,date,time,created) value (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
             siansql.saveList(sql, arr)
-            print('->请求数据成功，当前时间：%s,当前节点：%s\n'%(time, node))
+            print('->请求数据成功，当前页数:%s当前时间：%s,当前节点：%s\n'%(page, now, node))
             if num != len(symbols):
                 break
             page += 1
