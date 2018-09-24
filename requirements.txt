@@ -1,2 +1,2 @@
 demjson
-mysql.connector
+pymysql
