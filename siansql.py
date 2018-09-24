@@ -20,7 +20,7 @@ def getSymbols(page, num = 20, node='all'):
   con,cursor = dbCon()
   sql = 'select symbol from NodeList'
   if node != 'all':
-    sql += 'where node=\'%s\'%node
+    sql += 'where node=\'%s\''%node
   sql += ' limit %d,%d'%((page - 1) * num + 1, num)
   try:
     cursor.execute(sql)
