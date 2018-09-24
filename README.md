@@ -12,5 +12,6 @@
 * mysql
 ## 运行
 1)  pip安装requirements.txt中包含的依赖
+2) 数据库导入docs/sinaspider.sql的数据库结构
 2) python setup.py
 3) python main.py
