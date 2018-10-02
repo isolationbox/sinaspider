@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #coding:utf-8
 import demjson
-import siansql
+import sinasql
 import requestmethod
 import sys
 
@@ -33,6 +33,6 @@ for node in nodeList:
         data['page'] += 1
         data['_s_r_a'] = 'page'
         params = list(map(lambda item: (item['symbol'], item['name'],node), stockInfo))
-        siansql.saveList(sql, params)
+        sinasql.saveList(sql, params)
         if len(stockInfo) < 100:
             break
