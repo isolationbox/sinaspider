@@ -1,0 +1,26 @@
+.navbar {
+    height: 55px;
+    text-align: center;
+}
+.title {
+    font-size: 18px;
+    line-height: 55px;
+    color: #fff;
+}
+
+.my-container {
+    overflow: auto;
+}
+
+#caption {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/*侧边导航*/
+.Hui-aside{background-color:#333;border-right: 1px solid #222}/*侧边栏*/
+.Hui-aside .menu_dropdown ul li a {color:#fff;border-bottom:1px solid #222}
+.Hui-aside .menu_dropdown ul li a:hover{color:#fff;background-color:#777}
+.Hui-aside .menu_dropdown ul li.current a,
+.Hui-aside .menu_dropdown ul li.current a:hover{ color:#fff;background:#777}
+.Hui-aside .menu_dropdown dl > dt {color:#fff;border-bottom: 1px solid #222;font-weight:normal}

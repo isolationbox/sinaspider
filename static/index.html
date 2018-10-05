@@ -1,80 +1,116 @@
 ﻿<!DOCTYPE HTML>
 <html>
-<head>
-<meta charset="utf-8">
-<link rel="stylesheet" type="text/css" href="http://static.h-ui.net/h-ui/3.1/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="http://static.h-ui.net/h-ui.admin/3.1/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="http://static.h-ui.net/www/home/css/H-ui.doc.css" />
-<link rel="stylesheet" type="text/css" href="http://lib.h-ui.net/Hui-iconfont/1.0.9/iconfont.min.css" />
-<script type="text/javascript" src="/config.js"></script>
-<script type="text/javascript" src="http://lib.h-ui.net/jquery/1.9.1/jquery.min.js"></script>
-<title>股票网站</title>
-</head>
-
-<body onLoad="prettyPrint()">
-<!-- 顶部标题-->
-<header class="navbar-wrapper">
-	<div class="navbar navbar-black">
-		<div class="container-fluid cl" style="text-align: center"> 
-			<span class="logo navbar-logo hidden-xs" style="float: none">股票网站</span> 
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/H-ui.css" />
+		<link rel="stylesheet" type="text/css" href="css/my.css" />
+		<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/iconfont.css" />
+		<script type="text/javascript" src="lib/jquery/jquery.js"></script>
+		<title>股票网站</title>
+	</head>
+	<body>
+	<!-- 顶部标题-->
+	<header class="navbar navbar-black">
+		<span class="title">股票网站</span>
+	</header>
+	<!-- 左侧导航栏 -->
+	<aside class="Hui-aside">
+		<div class="menu_dropdown">
+			<ul>
+				<li><a href="index.html">首页</a></li>
+			</ul>
+			<ul>
+				<li><a href="index.html">大盘指数</a></li>
+			</ul>
+			<dl>
+				<dt>沪市<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li><a href="index.html?node=sh_a">A股</a></li>
+						<li><a href="index.html?node=sh_b">B股</a></li>
+					</ul>
+				</dd>
+			</dl>
+			<dl>
+				<dt>深市<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li><a href="index.html?node=sz_a">A股</a></li>
+						<li><a href="index.html?node=sz_b">B股</a></li>
+					</ul>
+				</dd>
+			</dl>
 		</div>
-	</div>
-</header> 
-<!-- 左侧导航栏 -->
-<aside class="Hui-aside">
-	<input runat="server" id="divScrollValue" type="hidden" value="" />
-	<div class="menu_dropdown bk_2">
-		<ul>
-			<li><a href="spider/dpzs.html">首页</a></li>
-		</ul>
-		<ul>
-			<li><a href="spider/dpzs.html">大盘指数</a></li>
-		</ul>
-		<dl id="menu_2">
-			<dt>沪市<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a href="spider/shA.html">A股</a></li>
-					<li><a href="spider/shB.html">B股</a></li>
-				</ul>
-			</dd>
-		</dl>
-		<dl id="menu_3">
-			<dt>深市<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<li><a href="spider/szA.html">A股</a></li>
-					<li><a href="spider/szB.html">B股</a></li>
-				</ul>
-			</dd>
-		</dl>
-	</div>
-</aside>
+	</aside>
 
-<section class="Hui-article-box">
-	<article class="cl pd-20" style="border:1px solid #ddd; margin: 30px; border-radius: 5px;">
-	<!-- 首页表格 -->
-			<!-- <div id="container" style="min-width:400px;height:400px"></div>
-			<div class="message"></div> -->
+	<section class="Hui-article-box my-container">
+		<article class="cl pd-20" style="border:1px solid #ddd; margin: 30px; border-radius: 5px;">
+		<!-- 首页表格 -->
 			<table class="table table-border table-bg table-hover">
-			<tr style="background-color:#f0f0f0;">
-			<td>代码</td><td>名称</td><td>最新价</td><td>涨跌额</td><td>涨跌幅</td><td>买入</td><td>卖出</td><td>昨收</td><td>今开</td><td>最高</td><td>最低</td>
-			</tr>
-			<tr>
-			<td>代码</td><td>名称</td><td>最新价</td><td>涨跌额</td><td>涨跌幅</td><td>买入</td><td>卖出</td><td>昨收</td><td>今开</td><td>最高</td><td>最低</td>
-			</tr>
+				<caption id="caption">最近交易日股票数据</caption>
+				<thead><tr style="background-color:#f0f0f0;">
+					<th>股票名称</th><th>股票代码</th><th>交易日期</th><th>开盘</th><th>最高</th><th>最低</th><th>收盘</th><th>昨收</th><th>涨跌额</th><th>涨跌幅</th><th>成交量(手)</th><th>成交额（千）</th>
+				</tr></thead>
+				<tbody id="table">
+				</tbody>
 			</table>
-	</article>
-	<!-- 底部信息 -->
-	<footer class="footer mt-20">
-		<div class="container-fluid">
-			<span>感谢使用</span>
-		</div>
-	</footer>
-</section>
-<script type="text/javascript" src="http://lib.h-ui.net/prettify.js"></script> 
-<script type="text/javascript" src="http://static.h-ui.net/h-ui/3.1/js/H-ui.min.js"></script>
-<script type="text/javascript" src="http://static.h-ui.net/www/home/js/H-ui.admin.www.js"></script>
-<script type="text/javascript" src="http://static.h-ui.net/www/home/js/common.js"></script>
-</body>
+		</article>
+		<!-- 底部信息 -->
+		<footer class="footer mt-20">
+			<div class="container-fluid">
+				<span>感谢使用Copyright&copy;2018</span>
+			</div>
+		</footer>
+	</section>
+	<script type="text/javascript" src="js/H-ui.js"></script>
+	<script>
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			return r ? unescape(r[2]) : null;
+		}
+		var node = GetQueryString('node') || 'dpzs';
+		var nameMap = {
+			dpzs: '大盘指数',
+			sh_a: '沪市A股',
+			sh_b: '沪市B股',
+			sz_a: '深市A股',
+			sz_b: '深市B股'
+		}
+		document.getElementById('caption').innerHTML = nameMap[node] + '最新交易数据'
+		$(document).ready(function() {
+			// 监听下拉菜单
+			$(".Hui-aside").Huifold({
+				titCell:'.menu_dropdown dl dt',
+				mainCell:'.menu_dropdown dl dd',
+			});
+			$.ajax({
+				url: '/api/getlastinfo',
+				type: 'POST',
+				data: {
+					page: 1,
+					num: 20,
+					node: node
+				},
+				success: function(result,status,xhr) {
+					result = JSON.parse(result);
+					console.log(result, status);
+					if (status === 'success' && result.error === false) {
+						var i, j, out = '';
+						for(i = 0; i < result.data.length; i++) {
+							out += '<tr>';
+							for(j = 0; j < result.data[i].length; j++) {
+								out += '<td>' + result.data[i][j] + '</td>';
+							}
+							out += '</tr>';
+						}
+						document.getElementById('table').innerHTML = out;
+					} else {
+						alert('系统出了一点下问题');
+					}
+				}
+			});
+		});
+	</script>
+	</body>
 </html>

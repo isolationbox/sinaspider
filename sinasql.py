@@ -46,7 +46,7 @@ def getLastInfoByNode(node='dpzs', page=1 , num=20):
     cursor.execute(sql)
     date = cursor.fetchone()[0]
     print(date)
-    sql = 'SELECT stock_day_line.* FROM stock_day_line LEFT JOIN NodeList ON stock_day_line.code = NodeList.code WHERE NodeList.node = \'%s\' and stock_day_line.date =\'%s\' limit %d,%d'%(node,date,(page-1)*num,num)
+    sql = 'SELECT NodeList.name,stock_day_line.* FROM stock_day_line LEFT JOIN NodeList ON stock_day_line.code = NodeList.code WHERE NodeList.node = \'%s\' and stock_day_line.date =\'%s\' limit %d,%d'%(node,date,(page-1)*num,num)
     print(sql)
     cursor.execute(sql)
     data = cursor.fetchall()
@@ -58,7 +58,7 @@ def getLastInfoByNode(node='dpzs', page=1 , num=20):
       total = 0
     res = { 'error': False, 'data': data,'total': total}
   except:
-    print(sys.exc_info()[0])
+    print(sys.exc_info()[1])
     res = { 'error': True, 'err_msg': '内部错误' }
   con.close()
   return json.dumps(res)
