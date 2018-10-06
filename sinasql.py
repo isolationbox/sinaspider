@@ -63,16 +63,25 @@ def getLastInfoByNode(node='dpzs', page=1 , num=20):
   con.close()
   return json.dumps(res)
 
-def getHistory(code, num=30):
-  print('%s,%s'%(code,num))
-  num = int(num)
+def getHistory(node, symbol, showType='hours', length='30'):
+  if not (node and symbol):
+    return json.dumps({'error': True, 'err_msg': '缺少参数'})
+  print('%s,%s,%s,%s'%(node, symbol, showType, length))
+  length = int(length)
   con,cursor = dbCon()
   try:
-    sql = 'select * from stock_day_line where code=\'%s\' order by date limit %d'%(code,num)
+    if showType == 'hours':
+      sql = 'select * from %s where symbol=\'%s\' ORDER BY day DESC limit %d'%(node, symbol, length)
+    else:
+      # 这句我还没想好怎么写
+      sql = 'select * from %s where symbol=\'%s\' ORDER BY day DESC limit %d'%(node, symbol, length)
     print(sql)
     cursor.execute(sql)
     data = cursor.fetchall()
-    res = { 'error': False, 'data': data }
+    sql = 'select name from NodeList where symbol = \'%s\''%symbol
+    cursor.execute(sql)
+    name = cursor.fetchone()[0]
+    res = { 'error': False, 'name': name, 'data': data }
   except:
     print(sys.exc_info()[1])
     res = { 'error': True, 'err_msg': '内部错误' }

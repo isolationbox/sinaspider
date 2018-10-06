@@ -44,11 +44,11 @@
 	</aside>
 
 	<section class="Hui-article-box my-container">
-		<article class="cl pd-20" style="border:1px solid #ddd; margin: 30px; border-radius: 5px;">
+		<article class="cl pd-20">
 		<!-- 首页表格 -->
 			<table class="table table-border table-bg table-hover">
 				<caption id="caption">最近交易日股票数据</caption>
-				<thead><tr style="background-color:#f0f0f0;">
+				<thead><tr>
 					<th>股票名称</th><th>股票代码</th><th>交易日期</th><th>开盘</th><th>昨收</th><th>最高</th><th>最低</th><th>交易额</th>
 				</tr></thead>
 				<tbody id="table">
@@ -68,6 +68,9 @@
 			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
 			var r = window.location.search.substr(1).match(reg);
 			return r ? unescape(r[2]) : null;
+		}
+		function goDetail(symbol) {
+			location.href = 'detail.html?symbol=' + symbol + '&node=' + node;
 		}
 		var node = GetQueryString('node') || 'dpzs';
 		var nameMap = {
@@ -98,7 +101,7 @@
 					if (status === 'success' && result.error === false) {
 						var i, j, out = '';
 						for(i = 0; i < result.data.length; i++) {
-							out += '<tr>';
+							out += '<tr onClick=goDetail("' + result.data[i][1] + '")>';
 							for(j = 0; j < result.data[i].length; j++) {
 								out += '<td>' + result.data[i][j] + '</td>';
 							}

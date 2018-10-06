@@ -12,9 +12,32 @@
     overflow: auto;
 }
 
+.my-container thead {
+    background-color:#f0f0f0;
+}
+
+.my-container article {
+    border:1px solid #ddd;
+    margin: 30px;
+    border-radius: 5px;
+}
+
+#table tr {
+    cursor: pointer;
+}
+
 #caption {
     font-weight: bold;
     font-size: 16px;
+}
+
+.detail-container article {
+    padding-top: 20px;
+    display: flex;
+}
+
+.data-chart {
+    width: 50%;
 }
 
 /*侧边导航*/

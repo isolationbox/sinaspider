@@ -1,0 +1,155 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/H-ui.css" />
+		<link rel="stylesheet" type="text/css" href="css/my.css" />
+		<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/iconfont.css" />
+		<script type="text/javascript" src="lib/jquery/jquery.js"></script>
+		<script type="text/javascript" src="lib/highcharts/highcharts.min.js"></script>
+		<title>历史交易详情</title>
+	</head>
+	<body>
+	<!-- 顶部标题-->
+	<header class="navbar navbar-black">
+		<span class="title" id="title">股票网站</span>
+	</header>
+	<!-- 左侧导航栏 -->
+	<aside class="Hui-aside">
+		<div class="menu_dropdown">
+			<ul>
+				<li><a href="index.html">首页</a></li>
+			</ul>
+			<ul>
+				<li><a href="index.html">大盘指数</a></li>
+			</ul>
+			<dl>
+				<dt>沪市<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li><a href="index.html?node=sh_a">A股</a></li>
+						<li><a href="index.html?node=sh_b">B股</a></li>
+					</ul>
+				</dd>
+			</dl>
+			<dl>
+				<dt>深市<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li><a href="index.html?node=sz_a">A股</a></li>
+						<li><a href="index.html?node=sz_b">B股</a></li>
+					</ul>
+				</dd>
+			</dl>
+		</div>
+	</aside>
+
+	<section class="Hui-article-box detail-container">
+		<article>
+			<div id="chart1" class="data-chart"></div>
+			<div id="chart2" class="data-chart"></div>
+			<div id="chart3" class="data-chart"></div>
+		</article>
+		<!-- 底部信息 -->
+		<footer class="footer mt-20">
+			<div class="container-fluid">
+				<span>感谢使用Copyright&copy;2018</span>
+			</div>
+		</footer>
+	</section>
+	<script type="text/javascript" src="js/H-ui.js"></script>
+	<script>
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			return r ? unescape(r[2]) : null;
+		}
+		var symbol = GetQueryString('symbol');
+		var node = GetQueryString('node');
+		var type = 'hours'
+		var data1={
+				title: { text: '最低最高价历史走势' },
+				series: [{name: '最高价',data:[]},{name: '最低价',data:[]}],
+				xAxis: {
+					title: {
+						text: '时间'
+					}
+				},
+				yAxis: {
+					title: {
+						text: '价格(元)',
+					}
+				}
+			},
+			data2={
+				title: { text: '开收盘走势'},
+				series: [{name:'开盘价',data:[]},{name: '收盘价',data:[]}],
+				xAxis: {
+					title: {
+						text: '时间',
+					}
+				},
+				yAxis: {
+					title: {
+						text: '价格(元)',
+					}
+				}
+			},
+			data3={
+				title: { text: '交易量走势' },
+				series:[{name:'交易量',data:[]}],
+				xAxis: {
+					title: {
+						text: '时间',
+					}
+				},
+				yAxis: {
+					title: {
+						text: '交易额(万)',
+					}
+				}
+			};
+		$(document).ready(function() {
+			// 监听下拉菜单
+			$(".Hui-aside").Huifold({
+				titCell:'.menu_dropdown dl dt',
+				mainCell:'.menu_dropdown dl dd',
+			});
+			$.ajax({
+				url: '/api/gethistory',
+				type: 'POST',
+				data: {
+					len: 20,
+					type: type,
+					symbol: symbol,
+					node: node
+				},
+				success: function(result,status,xhr) {
+					result = JSON.parse(result);
+					console.log(result, status);
+					if (status === 'success' && result.error === false) {
+						document.title = result.name + '历史交易记录';
+						document.getElementById('title').innerHTML = document.title;
+						var categories = [];
+						for (var i = 0; i < result.data.length; i++) {
+							data1.series[0].data.push(parseFloat(result.data[i][4]));
+							data1.series[1].data.push(parseFloat(result.data[i][5]));
+							data2.series[0].data.push(parseFloat(result.data[i][2]));
+							data2.series[1].data.push(parseFloat(result.data[i][3]));
+							data3.series[0].data.push(parseFloat(result.data[i][6])/1e4);
+							categories.unshift(result.data[i][1]);
+						}
+						data1.xAxis.categories = data2.xAxis.categories = data3.xAxis.categories = categories;
+						$('#chart1').highcharts(data1);
+						$('#chart2').highcharts(data2);
+						$('#chart3').highcharts(data3);
+						console.log(data1,data2,data3);
+					} else {
+						alert('系统出了一点下问题');
+					}
+				}
+			});
+		});
+	</script>
+	</body>
+</html>

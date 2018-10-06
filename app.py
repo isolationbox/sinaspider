@@ -12,7 +12,7 @@ def getLastInfoByNode():
 @app.route('/api/gethistory', methods=['POST'])
 def getHistory():
     print(request.method)
-    res = sinasql.getHistory(request.form['code'],request.form['num'])
+    res = sinasql.getHistory(request.form['node'],request.form['symbol'],request.form['type'],request.form['len'])
     return res
 
 if __name__ == '__main__':
