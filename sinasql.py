@@ -41,17 +41,17 @@ def getLastInfoByNode(node='dpzs', page=1 , num=20):
   num = int(num)
   con,cursor = dbCon()
   try:
-    sql = 'select MAX(date) from stock_day_line left join NodeList on stock_day_line.code = NodeList.code where NodeList.node=\'%s\''%node
+    sql = 'select MAX(day) from %s '%node
     print(sql)
     cursor.execute(sql)
-    date = cursor.fetchone()[0]
-    print(date)
-    sql = 'SELECT NodeList.name,stock_day_line.* FROM stock_day_line LEFT JOIN NodeList ON stock_day_line.code = NodeList.code WHERE NodeList.node = \'%s\' and stock_day_line.date =\'%s\' limit %d,%d'%(node,date,(page-1)*num,num)
+    day = cursor.fetchone()[0]
+    print(day)
+    sql = 'SELECT name, %s.* from %s left join NodeList on %s.symbol=NodeList.symbol where day=\'%s\' limit %d,%d'%(node, node, node, day,(page-1) * num, num)
     print(sql)
     cursor.execute(sql)
     data = cursor.fetchall()
     if len(data) > 0:
-      sql = 'select count(*) from stock_day_line LEFT JOIN NodeList ON stock_day_line.code = NodeList.code where NodeList.node=\'%s\' and date = \'%s\''%(node,date)
+      sql = 'select count(*) from NodeList where node=\'%s\''%(node)
       cursor.execute(sql)
       total = cursor.fetchone()[0]
     else:
