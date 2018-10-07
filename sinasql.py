@@ -5,7 +5,7 @@ import sys
 import json
 
 def dbCon():
-  con = pymysql.connect(host='localhost',user='sinaspider',password='123456', database='sinaspider')
+  con = pymysql.connect(host='localhost',user='root',password='mysql190525', database='sinaspider')
   cursor = con.cursor()
   return con, cursor
 
