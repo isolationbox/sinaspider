@@ -19,12 +19,9 @@ def saveList(sql, list):
     print(sys.exc_info())
   con.close()
 
-def getSymbols(page, num = 20, node='all'):
+def getSymbols(page, num = 20, node='dpzs'):
   con,cursor = dbCon()
-  sql = 'select symbol from NodeList'
-  if node != 'all':
-    sql += ' where node=\'%s\''%node
-  sql += ' limit %d,%d'%((page - 1) * num, num)
+  sql = 'select symbol from NodeList where node = \'%s\' limit %d,%d'%(node,(page - 1) * num, num)
   try:
     cursor.execute(sql)
     result = cursor.fetchall()
@@ -73,7 +70,6 @@ def getHistory(node, symbol, showType='hours', length='30'):
     if showType == 'hours':
       sql = 'select * from %s where symbol=\'%s\' ORDER BY day DESC limit %d'%(node, symbol, length)
     else:
-      # 这句我还没想好怎么写
       sql = 'select a.* from %s a,(select @r:=0) b where symbol=\'%s\'and MOD(@r:=@r+1, 4)=0 ORDER BY day DESC limit %d'%(node, symbol, length)
     print(sql)
     cursor.execute(sql)
