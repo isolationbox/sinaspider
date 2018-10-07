@@ -9,8 +9,22 @@ if requestmethod.isHoliday(time.strftime("%Y%m%d", time.localtime())):
 else:
     print('工作日：需要爬取')
     num = 20
-    now = time.strftime("%Y-%m-%d %H", time.localtime())
-    nodes = ['sh_a', 'sh_b', 'sz_a', 'sz_b', 'dpzs']
+
+    # 矫正时间，处理为xx:30或者xx:00,t_hour为小时，t_min为分
+    t = time.localtime()
+    if t.tm_min < 15 or t.tm_min > 45:
+        t_min = '00'
+        if t.tm_min > 45:
+            t_hour = t.tm_hour + 1
+        else:
+            t_hour = t.tm_hour
+    else:
+        t_min = '30'
+        t_hour = t.tm_hour
+    now = '%d-%02d-%02d %s:%s:00'%(t.tm_year,t.tm_mon,t.tm_mday,t_hour,t_min)
+    print('当前矫正后的时间为%s'%now)
+
+    nodes = ['dpzs']
     for node in nodes:
         page = 1
         while True:
@@ -19,10 +33,10 @@ else:
                 break
             data = requestmethod.getDetail(symbols)
             arr = []
-            for i,v in enumerate(data):
-                arr.append((symbols[i],v[0],v[3],v[6],v[7],v[2],v[1],v[4],v[5],v[8],v[9],v[30],v[31],now))
-            # 代号，名称，最新价，买入，卖出，昨收，今开，最高，最低，成交量(股票数，一般要除100)，成交额(元，一般除万),日期，时间，创建时间
-            sql = 'insert into ' + node + ' (symbol,name,price,buy,sell,settlement,open,high,low,volume,amount,date,time,created) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+            for i in range(len(data)):
+                arr.append((symbols[i],now,data[i][1],data[i][2],data[i][4],data[i][5],data[i][8]))
+            # 代号，时间，今开，昨收，最高，最低，成交量
+            sql = 'insert into ' + node + ' (symbol,day,open,close,high,low,volume) values (%s,%s,%s,%s,%s,%s,%s)'
             sinasql.saveList(sql, arr)
             print('->请求数据成功，当前页数:%s当前时间：%s,当前节点：%s\n'%(page, now, node))
             if num != len(symbols):
