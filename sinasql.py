@@ -46,7 +46,7 @@ def getLastInfoByNode(node='dpzs', page=1 , num=20):
     cursor.execute(sql)
     day = cursor.fetchone()[0]
     print(day)
-    sql = 'SELECT name, %s.* from %s left join NodeList on %s.symbol=NodeList.symbol where day=\'%s\' limit %d,%d'%(node, node, node, day,(page-1) * num, num)
+    sql = 'SELECT name, %s.* from %s,NodeList where %s.symbol=NodeList.symbol and day=\'%s\' limit %d,%d'%(node, node, node, day,(page-1) * num, num)
     print(sql)
     cursor.execute(sql)
     data = cursor.fetchall()
@@ -74,7 +74,7 @@ def getHistory(node, symbol, showType='hours', length='30'):
       sql = 'select * from %s where symbol=\'%s\' ORDER BY day DESC limit %d'%(node, symbol, length)
     else:
       # 这句我还没想好怎么写
-      sql = 'select * from %s where symbol=\'%s\' ORDER BY day DESC limit %d'%(node, symbol, length)
+      sql = 'select a.* from %s a,(select @r:=0) b where symbol=\'%s\'and MOD(@r:=@r+1, 4)=0 ORDER BY day DESC limit %d'%(node, symbol, length)
     print(sql)
     cursor.execute(sql)
     data = cursor.fetchall()

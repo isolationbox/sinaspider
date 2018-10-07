@@ -8,7 +8,7 @@
     color: #fff;
 }
 
-.my-container {
+.my-container, .detail-container {
     overflow: auto;
 }
 
@@ -32,12 +32,13 @@
 }
 
 .detail-container article {
-    padding-top: 20px;
+    margin: 20px 100px;
     display: flex;
+    flex-direction: column;
 }
-
-.data-chart {
-    width: 50%;
+#page {
+    margin: 20px 20px 0;
+    float: right;
 }
 
 /*侧边导航*/

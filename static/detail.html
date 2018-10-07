@@ -63,7 +63,7 @@
 		}
 		var symbol = GetQueryString('symbol');
 		var node = GetQueryString('node');
-		var type = 'hours'
+		var type = 'days'
 		var data1={
 				title: { text: '最低最高价历史走势' },
 				series: [{name: '最高价',data:[]},{name: '最低价',data:[]}],
@@ -129,12 +129,16 @@
 						document.getElementById('title').innerHTML = document.title;
 						var categories = [];
 						for (var i = 0; i < result.data.length; i++) {
-							data1.series[0].data.push(parseFloat(result.data[i][4]));
-							data1.series[1].data.push(parseFloat(result.data[i][5]));
-							data2.series[0].data.push(parseFloat(result.data[i][2]));
-							data2.series[1].data.push(parseFloat(result.data[i][3]));
-							data3.series[0].data.push(parseFloat(result.data[i][6])/1e4);
-							categories.unshift(result.data[i][1]);
+							// 最高最低
+							data1.series[0].data.unshift(parseFloat(result.data[i][4]));
+							data1.series[1].data.unshift(parseFloat(result.data[i][5]));
+							// 开盘收盘
+							data2.series[0].data.unshift(parseFloat(result.data[i][2]));
+							data2.series[1].data.unshift(parseFloat(result.data[i][3]));
+							// 交易量
+							data3.series[0].data.unshift(parseFloat(result.data[i][6])/1e4);
+							// 横坐标, 字符串转数组，空格隔开，第一个为日期，第二个为时间 ['2018-09-28','19:20:10']
+							categories.unshift(result.data[i][1].split(' ')[0]);
 						}
 						data1.xAxis.categories = data2.xAxis.categories = data3.xAxis.categories = categories;
 						$('#chart1').highcharts(data1);
