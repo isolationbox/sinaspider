@@ -3,7 +3,6 @@
 import sinasql
 import requestmethod
 import time
-import datetime
 if requestmethod.isHoliday(time.strftime("%Y%m%d", time.localtime())):
     print('休息日：不需爬取')
 else:
