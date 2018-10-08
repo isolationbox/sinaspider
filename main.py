@@ -24,7 +24,7 @@ else:
     now = '%d-%02d-%02d %s:%s:00'%(t.tm_year,t.tm_mon,t.tm_mday,t_hour,t_min)
     print('当前矫正后的时间为%s'%now)
 
-    nodes = ['dpzs']
+    nodes = ['sh_a','sh_b','sz_a','sz_b','dpzs']
     for node in nodes:
         page = 1
         while True:
