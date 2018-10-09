@@ -43,7 +43,11 @@
 
 	<section class="Hui-article-box my-container">
 		<article class="cl pd-20">
-		<!-- 首页表格 -->
+			<div>
+				<input id="search"/>
+				<span onclick="search()">搜索</span>
+			</div>
+			<!-- 首页表格 -->
 			<table class="table table-border table-bg table-hover">
 				<caption id="caption">最近交易日股票数据</caption>
 				<thead><tr>
@@ -99,14 +103,15 @@
 			});
 		}
 		// 更新表格数据
-		function updateTable(page,num,needUpdatePage) {
+		function updateTable(page,num,needUpdatePage,search) {
 			$.ajax({
 				url: '/api/getlastinfo',
 				type: 'POST',
 				data: {
 					page: page,
 					num: num,
-					node: node
+					node: node,
+					search: search || ''
 				},
 				success: function(result,status,xhr) {
 					result = JSON.parse(result);
@@ -129,6 +134,11 @@
 					}
 				}
 			});
+		}
+		function search() {
+			var search = $("#search").val();
+			console.log(search);
+			updateTable(1, 20, false, search);
 		}
 		$(document).ready(function() {
 			// 监听下拉菜单
