@@ -41,6 +41,13 @@
     float: right;
 }
 
+.search-box span{
+    /* 鼠标变成手型 */
+    cursor: pointer;
+    /* 下划线 */
+    text-decoration: underline;
+}
+
 /*侧边导航*/
 .Hui-aside{background-color:#333;border-right: 1px solid #222}/*侧边栏*/
 .Hui-aside .menu_dropdown ul li a {color:#fff;border-bottom:1px solid #222}

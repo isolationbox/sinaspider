@@ -20,7 +20,7 @@
 			<ul>
 				<li><a href="index.html">大盘指数</a></li>
 			</ul>
-			<dl>
+			<dl id="sh">
 				<dt>沪市<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 				<dd>
 					<ul>
@@ -29,7 +29,7 @@
 					</ul>
 				</dd>
 			</dl>
-			<dl>
+			<dl id="sz">
 				<dt>深市<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 				<dd>
 					<ul>
@@ -43,7 +43,7 @@
 
 	<section class="Hui-article-box my-container">
 		<article class="cl pd-20">
-			<div>
+			<div class="search-box">
 				<input id="search"/>
 				<span onclick="search()">搜索</span>
 			</div>
@@ -83,7 +83,15 @@
 			sz_a: '深市A股',
 			sz_b: '深市B股'
 		}
-		document.getElementById('caption').innerHTML = nameMap[node] + '最新交易数据'
+		document.getElementById('caption').innerHTML = nameMap[node] + '最新交易数据';
+		
+		if (node !== 'dpzs') { //如果不是大盘指数
+			// $('#sh dt')这个节点添加一个class(selected)
+			$('#' + node.substr(0,2) + ' dt').addClass("selected");
+			//  $('#sh dd') 当前活跃的菜单下的dd元素显示出来，它之前的默认样式是display：none,隐藏
+			$('#' + node.substr(0,2) + ' dd').show();
+		}
+
 		// 跳转到detail页面
 		function goDetail(symbol) {
 			location.href = 'detail.html?symbol=' + symbol + '&node=' + node;
