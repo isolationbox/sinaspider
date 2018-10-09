@@ -32,23 +32,26 @@ def getSymbols(page, num = 20, node='dpzs'):
   con.close()
   return res
 
-def getLastInfoByNode(node='dpzs', page=1 , num=20):
+def getLastInfoByNode(node='dpzs', page=1 , num=20, search=''):
   print('%s,%s,%s'%(node,page,num))
   page = int(page)
   num = int(num)
   con,cursor = dbCon()
+  searchSql = ''
+  if search != '':
+    searchSql = ' and symbol like \'%' + search + '\'%'
   try:
     sql = 'select MAX(day) from %s '%node
     print(sql)
     cursor.execute(sql)
     day = cursor.fetchone()[0]
     print(day)
-    sql = 'SELECT name, %s.* from %s,NodeList where %s.symbol=NodeList.symbol and day=\'%s\' limit %d,%d'%(node, node, node, day,(page-1) * num, num)
+    sql = 'SELECT name, a.* from %s a,NodeList b where a.symbol=b.symbol and day=\'%s\'%s limit %d,%d'%(node, day, searchSql, (page-1) * num, num)
     print(sql)
     cursor.execute(sql)
     data = cursor.fetchall()
     if len(data) > 0:
-      sql = 'select count(*) from NodeList where node=\'%s\''%(node)
+      sql = 'select count(*) from NodeList where node=\'%s\'%s'%(node,searchSql)
       cursor.execute(sql)
       total = cursor.fetchone()[0]
     else:

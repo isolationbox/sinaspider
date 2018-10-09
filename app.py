@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/api/getlastinfo', methods=['POST'])
 def getLastInfoByNode():
-    res = sinasql.getLastInfoByNode(request.form['node'],request.form['page'],request.form['num'])
+    res = sinasql.getLastInfoByNode(request.form['node'],request.form['page'],request.form['num'],request.form['search'])
     return res
 
 @app.route('/api/gethistory', methods=['POST'])
