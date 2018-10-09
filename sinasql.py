@@ -39,7 +39,7 @@ def getLastInfoByNode(node='dpzs', page=1 , num=20, search=''):
   con,cursor = dbCon()
   searchSql = ''
   if search != '':
-    searchSql = ' and symbol like \'%' + search + '\'%'
+    searchSql = ' and a.symbol like \'%' + search + '%\''
   try:
     sql = 'select MAX(day) from %s '%node
     print(sql)
@@ -51,7 +51,7 @@ def getLastInfoByNode(node='dpzs', page=1 , num=20, search=''):
     cursor.execute(sql)
     data = cursor.fetchall()
     if len(data) > 0:
-      sql = 'select count(*) from NodeList where node=\'%s\'%s'%(node,searchSql)
+      sql = 'select count(*) from NodeList a where node=\'%s\'%s'%(node,searchSql)
       cursor.execute(sql)
       total = cursor.fetchone()[0]
     else:
