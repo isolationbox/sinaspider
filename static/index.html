@@ -112,7 +112,6 @@
 		}
 		// 更新表格数据
 		function updateTable(page,num,needUpdatePage) {
-			console.log(search,typeof search );
 			$.ajax({
 				url: '/api/getlastinfo',
 				type: 'POST',
@@ -120,7 +119,7 @@
 					page: page,
 					num: num,
 					node: node,
-					search: search || ''
+					search: window.search || ''
 				},
 				success: function(result,status,xhr) {
 					result = JSON.parse(result);
