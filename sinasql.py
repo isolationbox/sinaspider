@@ -39,7 +39,7 @@ def getLastInfoByNode(node='dpzs', page=1 , num=20, search=''):
   con,cursor = dbCon()
   searchSql = ''
   if search != '':
-    searchSql = ' and a.symbol like \'%' + search + '%\''
+    searchSql = " and (a.symbol like '%" + search + "%' or a.name like '%" + search + "%')"
   try:
     sql = 'select MAX(day) from %s '%node
     print(sql)

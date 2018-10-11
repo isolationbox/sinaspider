@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
 import sinasql
-import json
+
 app = Flask(__name__)
 
 @app.route('/api/getlastinfo', methods=['POST'])

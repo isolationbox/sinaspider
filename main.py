@@ -21,6 +21,7 @@ else:
         t_min = '30'
         t_hour = t.tm_hour
     now = '%d-%02d-%02d %s:%s:00'%(t.tm_year,t.tm_mon,t.tm_mday,t_hour,t_min)
+    # now = '2018-10-10 10:30:00'
     print('当前矫正后的时间为%s'%now)
 
     nodes = ['sh_a','sh_b','sz_a','sz_b','dpzs']

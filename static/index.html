@@ -45,7 +45,7 @@
 		<article class="cl pd-20">
 			<div class="search-box">
 				<input id="search"/>
-				<span onclick="search()">搜索</span>
+				<span onclick="searchinfo()">搜索</span>
 			</div>
 			<!-- 首页表格 -->
 			<table class="table table-border table-bg table-hover">
@@ -111,7 +111,7 @@
 			});
 		}
 		// 更新表格数据
-		function updateTable(page,num,needUpdatePage,search) {
+		function updateTable(page,num,needUpdatePage) {
 			$.ajax({
 				url: '/api/getlastinfo',
 				type: 'POST',
@@ -125,6 +125,9 @@
 					result = JSON.parse(result);
 					console.log(result, status);
 					if (status === 'success' && result.error === false) {
+						if(!result.total){
+							alert('没有数据');
+						}
 						var i, j, out = '';
 						for(i = 0; i < result.data.length; i++) {
 							out += '<tr onClick=goDetail("' + result.data[i][1] + '")>';
@@ -138,15 +141,15 @@
 							updatePage(result.total, num);
 						}
 					} else {
-						alert('系统出了一点下问题');
+						alert('系统出了一点小问题');
 					}
 				}
 			});
 		}
-		function search() {
-			var search = $("#search").val();
+		function searchinfo() {
+			search = $("#search").val();
 			console.log(search);
-			updateTable(1, 20, false, search);
+			updateTable(1, 20, true);
 		}
 		$(document).ready(function() {
 			// 监听下拉菜单
