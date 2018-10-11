@@ -44,8 +44,8 @@
 	<section class="Hui-article-box my-container">
 		<article class="cl pd-20">
 			<div class="search-box">
-				<input id="search"/>
-				<span onclick="searchinfo()">搜索</span>
+				<input id="search-id"/>
+				<span onclick="searchInfo()">搜索</span>
 			</div>
 			<!-- 首页表格 -->
 			<table class="table table-border table-bg table-hover">
@@ -112,6 +112,7 @@
 		}
 		// 更新表格数据
 		function updateTable(page,num,needUpdatePage) {
+			console.log(search,typeof search );
 			$.ajax({
 				url: '/api/getlastinfo',
 				type: 'POST',
@@ -146,8 +147,8 @@
 				}
 			});
 		}
-		function searchinfo() {
-			search = $("#search").val();
+		function searchInfo() {
+			search = $("#search-id").val();
 			console.log(search);
 			updateTable(1, 20, true);
 		}
